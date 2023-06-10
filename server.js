@@ -5,11 +5,11 @@ app.get("/greeting", (req, res) => {
     res.send("Hello stranger")
 })
 
-app.get("/greeting/:id", (req,  res) => {
+app.get("/greeting/:name", (req,  res) => {
     const arr = ["Oleh", "Oleh Kravets"]
-    const id = req.params.id
-    res.send(`<h1>${arr[id]}</h1>
-        <h2>Hello there,${arr[id]} </h2>
+    const name = req.params.name
+    res.send(`<h1>${arr[name]}</h1>
+        <h2>Hello there,${arr[name]} </h2>
     `)
 })
 
