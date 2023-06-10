@@ -13,6 +13,14 @@ app.get("/greeting/:name", (req,  res) => {
     `)
 })
 
+app.get("/tip/:total/:tipPercentage", (req, res) => {
+    const total = parseFloat(req.params.total);
+    const tipPercentage = parseInt(req.params.tipPercentage);
+    const tipAmount = (total * tipPercentage) / 100;
+  
+    res.send(tipAmount.toString());
+  });
+
 app.listen(3000,() => {
     console.log("Listening on port 3000")
 })
