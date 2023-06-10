@@ -34,6 +34,33 @@ app.get("/tip/:total/:tipPercentage", (req, res) => {
     res.send(responseHtml);
   });
 
+  function isFibonacci(number) {
+    if (number < 0) {
+      return false;
+    } else if (number === 0 || number === 1) {
+      return true;
+    } else {
+      let a = 0;
+      let b = 1;
+      while (b < number) {
+        let temp = b;
+        b = a + b;
+        a = temp;
+      }
+      return b === number;
+    }
+  }
+  
+
+  app.get('/fibonacci', (req, res) => {
+    const number = parseInt(req.query.number);
+    if (isFibonacci(number)) {
+      res.send('Very good. It is a Fibonacci number.');
+    } else {
+      res.send('I can tell this is not a Fibonacci number.');
+    }
+  });
+
 app.listen(3000,() => {
     console.log("Listening on port 3000")
 })
