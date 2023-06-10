@@ -1,5 +1,7 @@
 const express = require("express")
 const app = express()
+const request = require('request');
+const apiUrl = 'http://jservice.io/api/random';
 
 app.get("/greeting", (req, res) => {
     res.send("Hello stranger")
@@ -59,6 +61,31 @@ app.get("/tip/:total/:tipPercentage", (req, res) => {
     } else {
       res.send('I can tell this is not a Fibonacci number.');
     }
+  });
+
+  request(apiUrl, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      const question = JSON.parse(body)[0];
+      console.log('Category:', question.category.title);
+      console.log('Question:', question.question);
+    } else {
+      console.error('Error:', error);
+    }
+  });
+
+  app.get('/trivia', (req, res) => {
+    request(apiUrl, (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        const question = JSON.parse(body)[0];
+        const trivia = {
+          question: question.question,
+          answer: question.answer,
+        };
+        res.json(trivia);
+      } else {
+        res.status(500).send('Error retrieving trivia question');
+      }
+    });
   });
 
 app.listen(3000,() => {
